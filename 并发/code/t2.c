@@ -20,6 +20,7 @@ void *child(void *args) {
 
 void thr_join() {
   pthread_mutex_lock(&m);
+  // 这里done和while循环的设置都是必须且精巧的的
   while (done == 0) 
     pthread_cond_wait(&c, &m);
   pthread_mutex_unlock(&m);
