@@ -58,5 +58,52 @@ int main(int argc, char *argv[]) {
 &ensp;&ensp;`全缓冲`：系统缓冲区未满前，都不会调用write或read函数
 ##### 1.2 _exit（强制终止）
 &ensp;&ensp;子进程在结束时，不会自主清理系统缓冲等资源溢出，另外回调函数和系统析构函数__attribute__((destructor))也不会执行，而直接返回内核
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <string.h>
+#include <malloc.h>
+
+void foo() {
+  fprintf(stderr, "foo says bye\n");
+}
+
+
+void bar() {
+  fprintf(stderr, "bar says bye\n");
+}
+
+int main(int argc, char **argv) {
+  atexit(foo);
+  atexit(bar);
+  fprintf(stdout, "0ops~~~~forgot a newline.\n");
+  sleep(2);
+  if (argc > 1 && strcmp(argv[1], "exit") == 0)
+    exit(0);
+  if (argc > 1 && strcmp(argv[1], "_exit") == 0)
+    _exit(0);
+  return 0;
+}
+```
 #### 2. 异常
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <string.h>
+#include <malloc.h>
+#include <sys/resource.h>
+
+int main() {
+  char *some_memory;
+  int megs_obtained = 0;
+  struct rlimit rlt;
+  if (rlim_t j, k = RLIM_INFINITY) {
+    
+  }
+}
+```
 &ensp;&ensp;
